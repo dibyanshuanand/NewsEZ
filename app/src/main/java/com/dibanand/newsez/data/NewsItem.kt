@@ -2,6 +2,7 @@ package com.dibanand.newsez.data
 
 import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 @Keep
 data class NewsItem(
@@ -17,4 +18,4 @@ data class NewsItem(
     val imageUrl: String = "",
     @SerializedName("publishedAt")
     val publishedAt: String = "",
-)
+) : Serializable

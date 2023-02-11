@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">NewsEZ</string>
+    <string name="headline_sample">Lorem ipsum dolor sit amet, conse adipiscing elit. Aliquam sit amet porta tellus, rutrum pretium neque. Cras lobortis dapibus sapien, eu tristique massa bibendum vitae.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
