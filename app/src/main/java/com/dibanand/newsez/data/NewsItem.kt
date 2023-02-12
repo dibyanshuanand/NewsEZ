@@ -1,14 +1,16 @@
 package com.dibanand.newsez.data
 
 import androidx.annotation.Keep
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
+@Entity(tableName = "newsez")
 @Keep
 data class NewsItem(
+    @PrimaryKey(autoGenerate = true)
     var id: Int?,
-    @SerializedName("source")
-    val source: NewsSource?,
     @SerializedName("author")
     val author: String?,
     @SerializedName("title")

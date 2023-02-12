@@ -6,8 +6,10 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.dibanand.newsez.data.NewsApiResponse
+import com.dibanand.newsez.data.NewsItem
 import com.dibanand.newsez.repository.NewsRepository
 import com.dibanand.newsez.util.ResourceState
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class NewsViewModel(
@@ -54,6 +56,20 @@ class NewsViewModel(
                 Log.e(TAG, "Exception in getNewsHeadlines(): $e")
                 newsHeadlines.postValue(ResourceState.Error("Something went wrong"))
             }
+        }
+    }
+
+    fun bookmarkItem(newsItem: NewsItem): Job {
+        return viewModelScope.launch {
+            newsRepository.saveItemToDb(newsItem)
+        }
+    }
+
+    fun getAllBookmarks() = newsRepository.getAllBookmarks()
+
+    fun deleteBookmarkedItem(newsItem: NewsItem): Job {
+        return viewModelScope.launch {
+            newsRepository.deleteBookmarkedItem(newsItem)
         }
     }
 }

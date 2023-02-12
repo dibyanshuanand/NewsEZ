@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import com.dibanand.newsez.databinding.FragmentNewsItemBinding
 import com.dibanand.newsez.ui.NewsViewModel
+import com.google.android.material.snackbar.Snackbar
 
 class NewsItemFragment : Fragment() {
 
@@ -38,6 +39,11 @@ class NewsItemFragment : Fragment() {
         binding.wvNewsArticle.apply {
             webViewClient = WebViewClient()
             item.articleUrl?.let { loadUrl(it) }
+        }
+
+        binding.fabBookmark.setOnClickListener {
+            viewModel.bookmarkItem(item)
+            Snackbar.make(view, "Article bookmarked successfully !", Snackbar.LENGTH_SHORT).show()
         }
     }
 }
