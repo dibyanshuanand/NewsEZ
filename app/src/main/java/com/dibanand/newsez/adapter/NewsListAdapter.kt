@@ -19,7 +19,7 @@ class NewsListAdapter : RecyclerView.Adapter<NewsListAdapter.NewsItemViewHolder>
     }
 
     private lateinit var newsItemBinding: NewsListItemBinding
-    val newsList: MutableList<NewsItem> = mutableListOf(
+    var newsList: MutableList<NewsItem> = mutableListOf(
         NewsItem(
             source = NewsSource(name = "Livelaw.in"),
             title = "BREAKING: Supreme Court Collegium Recommends New Chief Justices For HCs Of Allahabad, Calcutta,... - Live Law - Indian Legal News",
