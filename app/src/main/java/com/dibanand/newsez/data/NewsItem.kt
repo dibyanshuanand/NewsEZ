@@ -7,17 +7,17 @@ import java.io.Serializable
 @Keep
 data class NewsItem(
     @SerializedName("source")
-    val source: NewsSource = NewsSource(),
+    val source: NewsSource?,
     @SerializedName("author")
-    val author: String = "",
+    val author: String?,
     @SerializedName("title")
-    val title: String = "",
+    val title: String?,
     @SerializedName("description")
-    val description: String = "",
+    val description: String?,
     @SerializedName("url")
-    val articleUrl: String = "",
+    val articleUrl: String?,
     @SerializedName("urlToImage")
-    val imageUrl: String = "",
+    val imageUrl: String?,
     @SerializedName("publishedAt")
-    val publishedAt: String = "",
+    val publishedAt: String?,
 ) : Serializable

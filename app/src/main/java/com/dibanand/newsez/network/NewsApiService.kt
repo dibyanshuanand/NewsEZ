@@ -13,6 +13,8 @@ interface NewsApiService {
         @Query("country")
         countryCode: String = "in",
         @Query("apiKey")
-        apiKey: String = Constants.API_KEY
+        apiKey: String = Constants.API_KEY,
+        @Query("page")
+        pageNumber: Int = 1
     ): Response<NewsApiResponse>
 }

@@ -6,7 +6,7 @@ import retrofit2.Response
 
 class NewsRepository {
 
-    suspend fun getNewsHeadlines(): Response<NewsApiResponse> {
-        return RetrofitInstance.newsApiService.getTopHeadlines()
+    suspend fun getNewsHeadlines(pageNumber: Int): Response<NewsApiResponse> {
+        return RetrofitInstance.newsApiService.getTopHeadlines(pageNumber = pageNumber)
     }
 }

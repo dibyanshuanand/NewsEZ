@@ -1,13 +1,15 @@
 package com.dibanand.newsez.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.dibanand.newsez.data.NewsItem
-import com.dibanand.newsez.data.NewsSource
 import com.dibanand.newsez.databinding.NewsListItemBinding
+
+typealias OnNewsItemClickListener = (NewsItem) -> Unit
 
 class NewsListAdapter : RecyclerView.Adapter<NewsListAdapter.NewsItemViewHolder>() {
 
@@ -18,15 +20,22 @@ class NewsListAdapter : RecyclerView.Adapter<NewsListAdapter.NewsItemViewHolder>
         const val TAG = "NewsListAdapter"
     }
 
+    init {
+        setHasStableIds(true)
+    }
+
     private lateinit var newsItemBinding: NewsListItemBinding
-    var newsList: MutableList<NewsItem> = mutableListOf(
-        NewsItem(
-            source = NewsSource(name = "Livelaw.in"),
-            title = "BREAKING: Supreme Court Collegium Recommends New Chief Justices For HCs Of Allahabad, Calcutta,... - Live Law - Indian Legal News",
-            publishedAt = "2023-02-09 16:17",
-            imageUrl = "https://www.livelaw.in/h-upload/2023/01/17/454220-supreme-court-of-india-sc-4.jpg"
-        )
-    )
+    private val diffCallback = object : DiffUtil.ItemCallback<NewsItem>() {
+        override fun areItemsTheSame(oldItem: NewsItem, newItem: NewsItem): Boolean {
+            return oldItem.articleUrl == newItem.articleUrl
+        }
+
+        override fun areContentsTheSame(oldItem: NewsItem, newItem: NewsItem): Boolean {
+            return oldItem == newItem
+        }
+    }
+    val listDiffer = AsyncListDiffer(this, diffCallback)
+    private var onNewsItemClickListener: OnNewsItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsItemViewHolder {
         newsItemBinding = NewsListItemBinding.inflate(
@@ -38,22 +47,34 @@ class NewsListAdapter : RecyclerView.Adapter<NewsListAdapter.NewsItemViewHolder>
     }
 
     override fun getItemCount(): Int {
-        return newsList.size
+        return listDiffer.currentList.size
     }
 
     override fun onBindViewHolder(holder: NewsItemViewHolder, position: Int) {
-        val item = newsList[position]
+        val item = listDiffer.currentList[position]
         newsItemBinding.apply {
-            Glide.with(holder.itemView).load(item.imageUrl).into(ivNewsImage)
-            tvSource.text = item.source.name
+            if (!item.imageUrl.isNullOrBlank()) {
+                Glide.with(holder.itemView).load(item.imageUrl).into(ivNewsImage)
+            }
+            tvSource.text = item.source?.name
             tvHeadline.text = item.title
             tvPublishTime.text = item.publishedAt
         }
 
         holder.itemView.setOnClickListener {
-            Log.e(TAG, "onBindViewHolder: $item")
+            onNewsItemClickListener?.invoke(item)
         }
     }
 
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
 
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
+
+    fun setOnAdapterItemClickListener(listener: OnNewsItemClickListener) {
+        this.onNewsItemClickListener = listener
+    }
 }

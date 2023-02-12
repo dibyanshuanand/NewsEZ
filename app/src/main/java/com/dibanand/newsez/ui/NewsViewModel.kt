@@ -17,6 +17,7 @@ class NewsViewModel(
 
     val newsHeadlines: MutableLiveData<ResourceState<NewsApiResponse>> = MutableLiveData()
     var newsHeadlinesResponse: NewsApiResponse? = null
+    var currentPage: Int = 1
 
     companion object {
         const val TAG = "NewsViewModel"
@@ -31,15 +32,20 @@ class NewsViewModel(
             newsHeadlines.postValue(ResourceState.Loading())
             try {
                 // TODO: Handle network states
-                val response = newsRepository.getNewsHeadlines()
+                val response = newsRepository.getNewsHeadlines(currentPage)
                 if (response.isSuccessful) {
                     response.body()?.let { res ->
+                        currentPage++
                         if (newsHeadlinesResponse == null) {
                             newsHeadlinesResponse = res
                         } else {
-                            // TODO: Add support for pages
+                            val oldArticles = newsHeadlinesResponse?.articles
+                            val newArticles = res.articles
+                            oldArticles?.addAll(newArticles)
                         }
-                        newsHeadlines.postValue(ResourceState.Success(res))
+                        newsHeadlines.postValue(
+                            ResourceState.Success(newsHeadlinesResponse ?: res)
+                        )
                     }
                 } else {
                     newsHeadlines.postValue(ResourceState.Error(response.message()))
