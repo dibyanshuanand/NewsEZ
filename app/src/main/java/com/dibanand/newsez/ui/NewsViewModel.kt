@@ -1,7 +1,10 @@
 package com.dibanand.newsez.ui
 
 import android.app.Application
-import androidx.lifecycle.*
+import android.util.Log
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.dibanand.newsez.data.NewsApiResponse
 import com.dibanand.newsez.repository.NewsRepository
 import com.dibanand.newsez.util.ResourceState
@@ -14,6 +17,10 @@ class NewsViewModel(
 
     val newsHeadlines: MutableLiveData<ResourceState<NewsApiResponse>> = MutableLiveData()
     var newsHeadlinesResponse: NewsApiResponse? = null
+
+    companion object {
+        const val TAG = "NewsViewModel"
+    }
 
     init {
         getNewsHeadlines()
@@ -38,6 +45,7 @@ class NewsViewModel(
                     newsHeadlines.postValue(ResourceState.Error(response.message()))
                 }
             } catch (e: Exception) {
+                Log.e(TAG, "Exception in getNewsHeadlines(): $e")
                 newsHeadlines.postValue(ResourceState.Error("Something went wrong"))
             }
         }

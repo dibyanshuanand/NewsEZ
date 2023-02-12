@@ -7,6 +7,6 @@ import retrofit2.Response
 class NewsRepository {
 
     suspend fun getNewsHeadlines(): Response<NewsApiResponse> {
-        return RetrofitInstance.newsApi.getTopHeadlines()
+        return RetrofitInstance.newsApiService.getTopHeadlines()
     }
 }

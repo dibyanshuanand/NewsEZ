@@ -6,8 +6,10 @@ import java.io.Serializable
 
 @Keep
 data class NewsItem(
-    @SerializedName("author")
+    @SerializedName("source")
     val source: NewsSource = NewsSource(),
+    @SerializedName("author")
+    val author: String = "",
     @SerializedName("title")
     val title: String = "",
     @SerializedName("description")
