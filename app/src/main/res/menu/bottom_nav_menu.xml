@@ -2,12 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/newsFragment"
+        android:id="@+id/newsFeedFragment"
         android:title="News"
         android:icon="@drawable/ic_news" />
 
     <item
-        android:id="@+id/bookmarksFragment"
+        android:id="@+id/newsBookmarksFragment"
         android:title="Bookmarks"
         android:icon="@drawable/ic_bookmarks" />
 
