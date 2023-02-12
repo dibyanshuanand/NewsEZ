@@ -9,19 +9,23 @@
         android:name="com.dibanand.newsez.NewsFeedFragment"
         android:label="NewsFeedFragment" >
         <action
-            android:id="@+id/action_newsFeedFragment_to_articleFragment2"
-            app:destination="@id/articleFragment2" />
+            android:id="@+id/action_newsFeedFragment_to_articleFragment"
+            app:destination="@id/newsItemFragment" />
     </fragment>
     <fragment
-        android:id="@+id/articleFragment2"
-        android:name="com.dibanand.newsez.ArticleFragment"
-        android:label="ArticleFragment" />
+        android:id="@+id/newsItemFragment"
+        android:name="com.dibanand.newsez.NewsItemFragment"
+        android:label="NewsItemFragment">
+        <argument
+            android:name="newsItem"
+            app:argType="com.dibanand.newsez.data.NewsItem" />
+    </fragment>
     <fragment
         android:id="@+id/newsBookmarksFragment"
         android:name="com.dibanand.newsez.NewsBookmarksFragment"
         android:label="NewsBookmarksFragment" >
         <action
-            android:id="@+id/action_newsBookmarksFragment_to_articleFragment2"
-            app:destination="@id/articleFragment2" />
+            android:id="@+id/action_newsBookmarksFragment_to_articleFragment"
+            app:destination="@id/newsItemFragment" />
     </fragment>
 </navigation>

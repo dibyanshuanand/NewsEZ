@@ -6,6 +6,7 @@ import java.io.Serializable
 
 @Keep
 data class NewsItem(
+    var id: Int?,
     @SerializedName("source")
     val source: NewsSource?,
     @SerializedName("author")
@@ -20,4 +21,12 @@ data class NewsItem(
     val imageUrl: String?,
     @SerializedName("publishedAt")
     val publishedAt: String?,
-) : Serializable
+) : Serializable {
+    override fun hashCode(): Int {
+        var result = id.hashCode()
+        if (articleUrl.isNullOrEmpty()){
+            result = 31 * result + articleUrl.hashCode()
+        }
+        return result
+    }
+}
