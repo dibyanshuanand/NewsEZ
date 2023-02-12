@@ -1,6 +1,7 @@
 package com.dibanand.newsez.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
@@ -56,7 +57,12 @@ class NewsListAdapter : RecyclerView.Adapter<NewsListAdapter.NewsItemViewHolder>
             if (!item.imageUrl.isNullOrBlank()) {
                 Glide.with(holder.itemView).load(item.imageUrl).into(ivNewsImage)
             }
-            tvSource.text = item.source?.name
+            if (item.source != null) {
+                tvSource.text = item.source.name
+            } else {
+                tvSource.visibility = View.INVISIBLE
+                tvBy.visibility = View.INVISIBLE
+            }
             tvHeadline.text = item.title
             tvPublishTime.text = item.publishedAt
         }

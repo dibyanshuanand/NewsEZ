@@ -11,6 +11,8 @@ import java.io.Serializable
 data class NewsItem(
     @PrimaryKey(autoGenerate = true)
     var id: Int?,
+    @SerializedName("source")
+    val source: NewsSource?,
     @SerializedName("author")
     val author: String?,
     @SerializedName("title")

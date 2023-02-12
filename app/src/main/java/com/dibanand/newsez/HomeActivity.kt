@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import com.dibanand.newsez.databinding.ActivityHomeBinding
 import com.dibanand.newsez.db.NewsItemDatabase
 import com.dibanand.newsez.repository.NewsRepository
@@ -30,5 +32,9 @@ class HomeActivity : AppCompatActivity() {
         Log.e(TAG, "onCreate: Called")
         newsViewModel =
             ViewModelProvider(this, viewModelProviderFactory).get(NewsViewModel::class.java)
+
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.newsFrag) as NavHostFragment
+        val navController = navHostFragment.navController
+        binding.bottomNavBar.setupWithNavController(navController)
     }
 }
