@@ -35,7 +35,8 @@ class HomeActivity : AppCompatActivity() {
         newsViewModel =
             ViewModelProvider(this, viewModelProviderFactory).get(NewsViewModel::class.java)
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.newsFrag) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.newsFrag) as NavHostFragment
         val navController = navHostFragment.navController
         binding.bottomNavBar.setupWithNavController(navController)
 

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dibanand.newsez.adapter.NewsListAdapter
 import com.dibanand.newsez.databinding.FragmentNewsFeedBinding
 import com.dibanand.newsez.ui.NewsViewModel
+import com.dibanand.newsez.util.Constants.ITEMS_PER_PAGE
 import com.dibanand.newsez.util.ResourceState
 import com.google.android.material.snackbar.Snackbar
 
@@ -46,7 +47,7 @@ class NewsFeedFragment : Fragment() {
 
             val isLastItem = (firstItem + rvLayoutManager.childCount) >= itemCount
             val isNotFirstItem = firstItem >= 0
-            val isMoreItemsInList = itemCount >= 20
+            val isMoreItemsInList = itemCount >= ITEMS_PER_PAGE
             val paginate = !isError && !isLoading && !isLastPage && isScrolling && isLastItem &&
                     isNotFirstItem && isMoreItemsInList
             if (paginate) {
@@ -96,7 +97,7 @@ class NewsFeedFragment : Fragment() {
                     isCurrentlyLoading(false)
                     response.data?.let { res ->
                         newsListAdapter.listDiffer.submitList(res.articles.toList())
-                        val totalPages = res.totalResults / 20 + 2
+                        val totalPages = res.totalResults / ITEMS_PER_PAGE + 2
                         isLastPage = viewModel.currentPage == totalPages
                     }
                 }
