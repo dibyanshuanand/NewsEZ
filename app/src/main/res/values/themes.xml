@@ -13,4 +13,9 @@
         <!-- Customize your theme here. -->
         <item name="android:statusBarColor">@color/green_700</item>
     </style>
+
+    <style name="roundedImageView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">6dp</item>
+    </style>
 </resources>

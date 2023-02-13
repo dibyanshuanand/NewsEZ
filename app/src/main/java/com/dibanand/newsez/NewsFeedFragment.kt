@@ -84,6 +84,7 @@ class NewsFeedFragment : Fragment() {
         }
 
         binding.btnRetry.setOnClickListener { viewModel.getNewsHeadlines() }
+        newsListAdapter.setDeleteBtnVisible(isVisible = false)
     }
 
     private fun setupObservers() {

@@ -43,7 +43,7 @@ class NewsItemFragment : Fragment() {
 
         binding.fabBookmark.setOnClickListener {
             viewModel.bookmarkItem(item)
-            Snackbar.make(view, "Article bookmarked successfully !", Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(view, "Saved to Bookmarks !", Snackbar.LENGTH_SHORT).show()
         }
     }
 }

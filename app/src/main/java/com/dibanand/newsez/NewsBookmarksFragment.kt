@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.dibanand.newsez.adapter.NewsListAdapter
 import com.dibanand.newsez.databinding.FragmentNewsBookmarksBinding
 import com.dibanand.newsez.ui.NewsViewModel
+import com.google.android.material.snackbar.Snackbar
 
 class NewsBookmarksFragment : Fragment() {
 
@@ -34,14 +35,14 @@ class NewsBookmarksFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(requireActivity()).get(NewsViewModel::class.java)
-        setupUi()
+        setupUi(view)
 
         viewModel.getAllBookmarks().observe(viewLifecycleOwner) { bookmarks ->
             newsListAdapter.listDiffer.submitList(bookmarks)
         }
     }
 
-    private fun setupUi() {
+    private fun setupUi(view: View) {
         setupRecyclerView()
         newsListAdapter.setOnAdapterItemClickListener {
             val bundle = Bundle().apply {
@@ -51,6 +52,11 @@ class NewsBookmarksFragment : Fragment() {
                 R.id.action_newsBookmarksFragment_to_articleFragment,
                 bundle
             )
+        }
+        newsListAdapter.setDeleteBtnVisible(isVisible = true)
+        newsListAdapter.setDeleteBtnClickListener {
+            viewModel.deleteBookmarkedItem(it)
+            Snackbar.make(view, "Bookmark deleted successfully", Snackbar.LENGTH_SHORT).show()
         }
     }
 

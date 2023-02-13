@@ -12,7 +12,7 @@ import com.dibanand.newsez.data.NewsItem
 import com.dibanand.newsez.databinding.NewsListItemBinding
 import com.dibanand.newsez.util.DateTimeUtil
 
-typealias OnNewsItemClickListener = (NewsItem) -> Unit
+typealias OnItemClickListener = (NewsItem) -> Unit
 
 class NewsListAdapter : RecyclerView.Adapter<NewsListAdapter.NewsItemViewHolder>() {
 
@@ -38,7 +38,9 @@ class NewsListAdapter : RecyclerView.Adapter<NewsListAdapter.NewsItemViewHolder>
         }
     }
     val listDiffer = AsyncListDiffer(this, diffCallback)
-    private var onNewsItemClickListener: OnNewsItemClickListener? = null
+    private var onNewsItemClickListener: OnItemClickListener? = null
+    private var onDeleteBtnClickListener: OnItemClickListener? = null
+    private var canDeleteBtnVisible: Boolean = false
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsItemViewHolder {
         newsItemBinding = NewsListItemBinding.inflate(
@@ -70,6 +72,14 @@ class NewsListAdapter : RecyclerView.Adapter<NewsListAdapter.NewsItemViewHolder>
             }
             tvHeadline.text = item.title
             item.publishedAt?.let { tvPublishTime.text = DateTimeUtil.parseTimestamp(it) }
+            newsItemBinding.btnDelete.visibility = if (canDeleteBtnVisible) View.VISIBLE else View.GONE
+            btnDelete.setOnClickListener {
+                onDeleteBtnClickListener?.invoke(item)
+                val currentList = mutableListOf<NewsItem>()
+                currentList.addAll(listDiffer.currentList)
+                currentList.removeAt(position)
+                listDiffer.submitList(currentList.toList())
+            }
         }
 
         holder.itemView.setOnClickListener {
@@ -85,7 +95,15 @@ class NewsListAdapter : RecyclerView.Adapter<NewsListAdapter.NewsItemViewHolder>
         return position
     }
 
-    fun setOnAdapterItemClickListener(listener: OnNewsItemClickListener) {
+    fun setOnAdapterItemClickListener(listener: OnItemClickListener) {
         this.onNewsItemClickListener = listener
+    }
+
+    fun setDeleteBtnVisible(isVisible: Boolean) {
+        canDeleteBtnVisible = isVisible
+    }
+
+    fun setDeleteBtnClickListener(listener: OnItemClickListener) {
+        this.onDeleteBtnClickListener = listener
     }
 }
