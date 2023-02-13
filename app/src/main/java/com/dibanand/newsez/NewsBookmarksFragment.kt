@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -35,8 +34,15 @@ class NewsBookmarksFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(requireActivity()).get(NewsViewModel::class.java)
-        setupRecyclerView()
+        setupUi()
 
+        viewModel.getAllBookmarks().observe(viewLifecycleOwner) { bookmarks ->
+            newsListAdapter.listDiffer.submitList(bookmarks)
+        }
+    }
+
+    private fun setupUi() {
+        setupRecyclerView()
         newsListAdapter.setOnAdapterItemClickListener {
             val bundle = Bundle().apply {
                 putSerializable("newsItem", it)
@@ -46,10 +52,6 @@ class NewsBookmarksFragment : Fragment() {
                 bundle
             )
         }
-
-        viewModel.getAllBookmarks().observe(viewLifecycleOwner, Observer { bookmarks ->
-            newsListAdapter.listDiffer.submitList(bookmarks)
-        })
     }
 
     private fun setupRecyclerView() {

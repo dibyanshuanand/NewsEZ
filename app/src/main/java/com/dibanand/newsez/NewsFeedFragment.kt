@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AbsListView.OnScrollListener
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -88,7 +87,7 @@ class NewsFeedFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        viewModel.newsHeadlines.observe(viewLifecycleOwner, Observer { response ->
+        viewModel.newsHeadlines.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is ResourceState.Success -> {
                     binding.grpConn.visibility = View.GONE
@@ -102,13 +101,11 @@ class NewsFeedFragment : Fragment() {
                 }
                 is ResourceState.Loading -> {
                     isCurrentlyLoading(true)
-                    Snackbar.make(binding.rvNewsHeadlines, "Loading", Snackbar.LENGTH_SHORT)
-                        .show()
                 }
                 is ResourceState.Error -> {
                     isError = true
                     isCurrentlyLoading(false)
-                    response.message?.let {msg ->
+                    response.message?.let { msg ->
                         Snackbar.make(binding.rvNewsHeadlines, "Error: $msg", Snackbar.LENGTH_SHORT)
                             .show()
                     }
@@ -119,7 +116,7 @@ class NewsFeedFragment : Fragment() {
                     binding.grpConn.visibility = View.VISIBLE
                 }
             }
-        })
+        }
     }
 
     private fun isCurrentlyLoading(active: Boolean) {

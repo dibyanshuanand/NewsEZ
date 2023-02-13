@@ -1,8 +1,8 @@
 package com.dibanand.newsez
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -25,13 +25,13 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
 
         val newsRepository = NewsRepository(NewsItemDatabase(this))
         val viewModelProviderFactory = NewsViewModelProviderFactory(application, newsRepository)
-        Log.e(TAG, "onCreate: Called")
         newsViewModel =
             ViewModelProvider(this, viewModelProviderFactory).get(NewsViewModel::class.java)
 
