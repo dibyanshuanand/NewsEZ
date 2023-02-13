@@ -70,6 +70,11 @@ class NewsFeedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(requireActivity()).get(NewsViewModel::class.java)
+        setupUi()
+        setupObservers()
+    }
+
+    private fun setupUi() {
         setupRecyclerView()
 
         newsListAdapter.setOnAdapterItemClickListener {
@@ -79,9 +84,14 @@ class NewsFeedFragment : Fragment() {
             findNavController().navigate(R.id.action_newsFeedFragment_to_articleFragment, bundle)
         }
 
+        binding.btnRetry.setOnClickListener { viewModel.getNewsHeadlines() }
+    }
+
+    private fun setupObservers() {
         viewModel.newsHeadlines.observe(viewLifecycleOwner, Observer { response ->
             when (response) {
                 is ResourceState.Success -> {
+                    binding.grpConn.visibility = View.GONE
                     isError = false
                     isLoading = false
                     response.data?.let { res ->
@@ -103,9 +113,10 @@ class NewsFeedFragment : Fragment() {
                             .show()
                     }
                 }
-                is ResourceState.Undefined -> {
+                is ResourceState.Blank -> {
                     isError = true
                     isLoading = false
+                    binding.grpConn.visibility = View.VISIBLE
                 }
             }
         })

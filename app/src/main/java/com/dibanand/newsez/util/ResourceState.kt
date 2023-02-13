@@ -15,5 +15,5 @@ sealed class ResourceState<T>(
     class Error<T>(message: String, data: T? = null) : ResourceState<T>(data, message)
 
     // Undefined state
-    class Undefined<T>(message: String? = null) : ResourceState<T>(message = message)
+    class Blank<T>(message: String? = null) : ResourceState<T>(message = message)
 }
