@@ -21,6 +21,7 @@ class NewsViewModel(
     val newsHeadlines: MutableLiveData<ResourceState<NewsApiResponse>> = MutableLiveData()
     var newsHeadlinesResponse: NewsApiResponse? = null
     var currentPage: Int = 1
+    val isLoadingActive: MutableLiveData<Boolean> = MutableLiveData(false)
 
     companion object {
         const val TAG = "NewsViewModel"

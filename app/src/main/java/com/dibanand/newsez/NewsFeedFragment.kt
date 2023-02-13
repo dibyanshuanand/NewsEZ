@@ -93,7 +93,7 @@ class NewsFeedFragment : Fragment() {
                 is ResourceState.Success -> {
                     binding.grpConn.visibility = View.GONE
                     isError = false
-                    isLoading = false
+                    isCurrentlyLoading(false)
                     response.data?.let { res ->
                         newsListAdapter.listDiffer.submitList(res.articles.toList())
                         val totalPages = res.totalResults / 20 + 2
@@ -101,13 +101,13 @@ class NewsFeedFragment : Fragment() {
                     }
                 }
                 is ResourceState.Loading -> {
-                    isLoading = true
+                    isCurrentlyLoading(true)
                     Snackbar.make(binding.rvNewsHeadlines, "Loading", Snackbar.LENGTH_SHORT)
                         .show()
                 }
                 is ResourceState.Error -> {
                     isError = true
-                    isLoading = false
+                    isCurrentlyLoading(false)
                     response.message?.let {msg ->
                         Snackbar.make(binding.rvNewsHeadlines, "Error: $msg", Snackbar.LENGTH_SHORT)
                             .show()
@@ -115,11 +115,16 @@ class NewsFeedFragment : Fragment() {
                 }
                 is ResourceState.Blank -> {
                     isError = true
-                    isLoading = false
+                    isCurrentlyLoading(false)
                     binding.grpConn.visibility = View.VISIBLE
                 }
             }
         })
+    }
+
+    private fun isCurrentlyLoading(active: Boolean) {
+        isLoading = active
+        viewModel.isLoadingActive.postValue(active)
     }
 
     private fun setupRecyclerView() {

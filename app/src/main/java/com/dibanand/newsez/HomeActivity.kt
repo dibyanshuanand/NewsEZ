@@ -2,7 +2,9 @@ package com.dibanand.newsez
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -36,5 +38,9 @@ class HomeActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.newsFrag) as NavHostFragment
         val navController = navHostFragment.navController
         binding.bottomNavBar.setupWithNavController(navController)
+
+        newsViewModel.isLoadingActive.observe(this, Observer { isActive ->
+            binding.loader.visibility = if(isActive) View.VISIBLE else View.GONE
+        })
     }
 }
