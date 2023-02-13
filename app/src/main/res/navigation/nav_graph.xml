@@ -27,5 +27,8 @@
         <action
             android:id="@+id/action_newsBookmarksFragment_to_articleFragment"
             app:destination="@id/newsItemFragment" />
+        <action
+            android:id="@+id/action_newsBookmarksFragment_self"
+            app:destination="@id/newsBookmarksFragment" />
     </fragment>
 </navigation>

@@ -75,10 +75,6 @@ class NewsListAdapter : RecyclerView.Adapter<NewsListAdapter.NewsItemViewHolder>
             newsItemBinding.btnDelete.visibility = if (canDeleteBtnVisible) View.VISIBLE else View.GONE
             btnDelete.setOnClickListener {
                 onDeleteBtnClickListener?.invoke(item)
-                val currentList = mutableListOf<NewsItem>()
-                currentList.addAll(listDiffer.currentList)
-                currentList.removeAt(position)
-                listDiffer.submitList(currentList.toList())
             }
         }
 
