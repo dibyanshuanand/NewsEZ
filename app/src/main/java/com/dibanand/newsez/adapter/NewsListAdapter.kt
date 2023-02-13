@@ -7,8 +7,10 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.dibanand.newsez.R
 import com.dibanand.newsez.data.NewsItem
 import com.dibanand.newsez.databinding.NewsListItemBinding
+import com.dibanand.newsez.util.DateTimeUtil
 
 typealias OnNewsItemClickListener = (NewsItem) -> Unit
 
@@ -55,7 +57,10 @@ class NewsListAdapter : RecyclerView.Adapter<NewsListAdapter.NewsItemViewHolder>
         val item = listDiffer.currentList[position]
         newsItemBinding.apply {
             if (!item.imageUrl.isNullOrBlank()) {
-                Glide.with(holder.itemView).load(item.imageUrl).into(ivNewsImage)
+                Glide.with(holder.itemView)
+                    .load(item.imageUrl)
+                    .error(R.drawable.news_cover)
+                    .into(ivNewsImage)
             }
             if (item.source != null) {
                 tvSource.text = item.source.name
@@ -64,7 +69,7 @@ class NewsListAdapter : RecyclerView.Adapter<NewsListAdapter.NewsItemViewHolder>
                 tvBy.visibility = View.INVISIBLE
             }
             tvHeadline.text = item.title
-            tvPublishTime.text = item.publishedAt
+            item.publishedAt?.let { tvPublishTime.text = DateTimeUtil.parseTimestamp(it) }
         }
 
         holder.itemView.setOnClickListener {

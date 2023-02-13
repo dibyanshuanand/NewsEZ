@@ -41,7 +41,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="2dp"
         android:layout_marginTop="8dp"
-        android:text="News Source"
         app:layout_constraintStart_toEndOf="@+id/tvBy"
         app:layout_constraintTop_toBottomOf="@+id/ivNewsImage" />
 
@@ -50,7 +49,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="2023-02-09 18:26"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivNewsImage" />
 
