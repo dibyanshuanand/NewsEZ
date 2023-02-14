@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -17,7 +16,7 @@ import com.dibanand.newsez.ui.NewsViewModelProviderFactory
 class HomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeBinding
-    lateinit var newsViewModel: NewsViewModel
+    private lateinit var newsViewModel: NewsViewModel
 
     companion object {
         const val TAG = "HomeActivity"
@@ -40,8 +39,8 @@ class HomeActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
         binding.bottomNavBar.setupWithNavController(navController)
 
-        newsViewModel.isLoadingActive.observe(this, Observer { isActive ->
-            binding.loader.visibility = if(isActive) View.VISIBLE else View.GONE
-        })
+        newsViewModel.isLoadingActive.observe(this) { isActive ->
+            binding.loader.visibility = if (isActive) View.VISIBLE else View.GONE
+        }
     }
 }

@@ -6,7 +6,7 @@ import com.dibanand.newsez.db.NewsItemDatabase
 import com.dibanand.newsez.network.RetrofitInstance
 import retrofit2.Response
 
-class NewsRepository(val database: NewsItemDatabase) {
+class NewsRepository(private val database: NewsItemDatabase) {
 
     suspend fun getNewsHeadlines(pageNumber: Int): Response<NewsApiResponse> {
         return RetrofitInstance.newsApiService.getTopHeadlines(pageNumber = pageNumber)

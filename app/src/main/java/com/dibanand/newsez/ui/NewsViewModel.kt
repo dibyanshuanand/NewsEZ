@@ -19,7 +19,7 @@ class NewsViewModel(
 ): AndroidViewModel(app) {
 
     val newsHeadlines: MutableLiveData<ResourceState<NewsApiResponse>> = MutableLiveData()
-    var newsHeadlinesResponse: NewsApiResponse? = null
+    private var newsHeadlinesResponse: NewsApiResponse? = null
     var currentPage: Int = 1
     val isLoadingActive: MutableLiveData<Boolean> = MutableLiveData(false)
 

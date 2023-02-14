@@ -20,7 +20,7 @@ class NewsItemFragment : Fragment() {
 
     private lateinit var binding: FragmentNewsItemBinding
     private lateinit var viewModel: NewsViewModel
-    val args: NewsItemFragmentArgs by navArgs()
+    private val args: NewsItemFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
