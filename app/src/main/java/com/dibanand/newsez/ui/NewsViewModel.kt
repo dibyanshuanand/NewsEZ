@@ -10,10 +10,14 @@ import com.dibanand.newsez.data.NewsItem
 import com.dibanand.newsez.repository.NewsRepository
 import com.dibanand.newsez.util.NetworkConnectionManager
 import com.dibanand.newsez.util.ResourceState
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class NewsViewModel(
+@HiltViewModel
+class NewsViewModel @Inject constructor(
     app: Application,
     private val newsRepository: NewsRepository
 ): AndroidViewModel(app) {
@@ -32,7 +36,7 @@ class NewsViewModel(
     }
 
     fun getNewsHeadlines() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             newsHeadlines.postValue(ResourceState.Loading())
             try {
                 if (NetworkConnectionManager.isInternetAvailable(getApplication())) {
@@ -65,7 +69,7 @@ class NewsViewModel(
     }
 
     fun bookmarkItem(newsItem: NewsItem): Job {
-        return viewModelScope.launch {
+        return viewModelScope.launch(Dispatchers.IO) {
             newsRepository.saveItemToDb(newsItem)
         }
     }
@@ -73,7 +77,7 @@ class NewsViewModel(
     fun getAllBookmarks() = newsRepository.getAllBookmarks()
 
     fun deleteBookmarkedItem(newsItem: NewsItem): Job {
-        return viewModelScope.launch {
+        return viewModelScope.launch(Dispatchers.IO) {
             newsRepository.deleteBookmarkedItem(newsItem)
         }
     }

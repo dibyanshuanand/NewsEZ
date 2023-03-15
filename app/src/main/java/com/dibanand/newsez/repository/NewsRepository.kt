@@ -2,23 +2,27 @@ package com.dibanand.newsez.repository
 
 import com.dibanand.newsez.data.NewsApiResponse
 import com.dibanand.newsez.data.NewsItem
-import com.dibanand.newsez.db.NewsItemDatabase
-import com.dibanand.newsez.network.RetrofitInstance
+import com.dibanand.newsez.db.NewsItemDao
+import com.dibanand.newsez.network.NewsApiService
 import retrofit2.Response
+import javax.inject.Inject
 
-class NewsRepository(private val database: NewsItemDatabase) {
+class NewsRepository @Inject constructor(
+    private val newsItemDao: NewsItemDao,
+    private val newsApiService: NewsApiService
+) {
 
     suspend fun getNewsHeadlines(pageNumber: Int): Response<NewsApiResponse> {
-        return RetrofitInstance.newsApiService.getTopHeadlines(pageNumber = pageNumber)
+        return newsApiService.getTopHeadlines(pageNumber = pageNumber)
     }
 
     suspend fun saveItemToDb(newsItem: NewsItem): Long {
-        return database.getNewsItemDao().upsert(newsItem)
+        return newsItemDao.upsert(newsItem)
     }
 
-    fun getAllBookmarks() = database.getNewsItemDao().getAllBookmarks()
+    fun getAllBookmarks() = newsItemDao.getAllBookmarks()
 
     suspend fun deleteBookmarkedItem(newsItem: NewsItem) {
-        database.getNewsItemDao().deleteItem(newsItem)
+        newsItemDao.deleteItem(newsItem)
     }
 }

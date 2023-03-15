@@ -5,21 +5,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dibanand.newsez.adapter.NewsListAdapter
 import com.dibanand.newsez.databinding.FragmentNewsBookmarksBinding
 import com.dibanand.newsez.ui.NewsViewModel
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class NewsBookmarksFragment : Fragment() {
 
     companion object {
         const val TAG = "NewsBookmarksFragment"
     }
     private lateinit var binding: FragmentNewsBookmarksBinding
-    private lateinit var viewModel: NewsViewModel
+//    private lateinit var viewModel: NewsViewModel
+    private val viewModel: NewsViewModel by viewModels()
     private lateinit var newsListAdapter: NewsListAdapter
 
     override fun onCreateView(
@@ -34,7 +37,7 @@ class NewsBookmarksFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(requireActivity()).get(NewsViewModel::class.java)
+//        viewModel = ViewModelProvider(requireActivity()).get(NewsViewModel::class.java)
         setupUi(view)
 
         viewModel.getAllBookmarks().observe(viewLifecycleOwner) { bookmarks ->

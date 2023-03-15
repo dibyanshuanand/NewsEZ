@@ -6,12 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.dibanand.newsez.databinding.FragmentNewsItemBinding
 import com.dibanand.newsez.ui.NewsViewModel
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class NewsItemFragment : Fragment() {
 
     companion object {
@@ -19,7 +21,8 @@ class NewsItemFragment : Fragment() {
     }
 
     private lateinit var binding: FragmentNewsItemBinding
-    private lateinit var viewModel: NewsViewModel
+//    private lateinit var viewModel: NewsViewModel
+    private val viewModel: NewsViewModel by viewModels()
     private val args: NewsItemFragmentArgs by navArgs()
 
     override fun onCreateView(
@@ -34,7 +37,7 @@ class NewsItemFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(requireActivity()).get(NewsViewModel::class.java)
+//        viewModel = ViewModelProvider(requireActivity()).get(NewsViewModel::class.java)
         val item = args.newsItem
         binding.wvNewsArticle.apply {
             webViewClient = WebViewClient()

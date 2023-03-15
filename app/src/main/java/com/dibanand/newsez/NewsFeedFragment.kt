@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AbsListView.OnScrollListener
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,14 +16,17 @@ import com.dibanand.newsez.ui.NewsViewModel
 import com.dibanand.newsez.util.Constants.ITEMS_PER_PAGE
 import com.dibanand.newsez.util.ResourceState
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class NewsFeedFragment : Fragment() {
 
     companion object {
         const val TAG = "NewsFeedFragment"
     }
     private lateinit var binding: FragmentNewsFeedBinding
-    private lateinit var viewModel: NewsViewModel
+//    private lateinit var viewModel: NewsViewModel
+    private val viewModel: NewsViewModel by viewModels()
     private lateinit var newsListAdapter: NewsListAdapter
     private var isLastPage = false
     private var isScrolling = false
@@ -69,7 +72,7 @@ class NewsFeedFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(requireActivity()).get(NewsViewModel::class.java)
+//        viewModel = ViewModelProvider(requireActivity()).get(NewsViewModel::class.java)
         setupUi()
         setupObservers()
     }
